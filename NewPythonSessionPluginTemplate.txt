@@ -1,0 +1,28 @@
+from IronWASP import *
+from System import *
+import clr
+#Inherit from the base SessionPlugin class
+class <Plugin Name>(SessionPlugin):
+
+	#Override the Update method with custom code to check the validity of the Request/Response and update the Request. Returns Request
+	def Update(self, req, res):
+		req.SetCookie(res)
+		return req
+
+	#Override the ProcessInjection method to update the Payload before it is injected. Returns String
+	def ProcessInjection(self, scnr, req, payload):
+		return payload
+
+	#Override the PrepareForInjection method to make changes to the request or perform other steps before injecting. Returns Request
+	def PrepareForInjection(self, req):
+		return req
+
+	#Override the GetInterestingResponse method to perform customs actions after the injection is done. Returns Response
+	def GetInterestingResponse(self, req, res):
+		return res
+
+
+p = <Plugin Class Name>()
+p.Name = "Name of the Plugin inside Iron. Pick a short name without spaces and special characters like 'AuthHandler', 'CsrfUpdater' etc. Name must be unique across all plugins"
+p.Description = "Short Description of the Plugin, displayed in the Plugins section"
+SessionPlugin.Add(p)

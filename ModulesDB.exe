@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modules>
+  <category>
+    <name>Analysis</name>
+    <module>
+      <name>HAWAS</name>
+      <version>0.2</version>
+      <display_name>HAWAS - Hybrid Analyzer for Web Application Security</display_name>
+      <author>Lavakumar Kuppan</author>
+      <project_home>https://github.com/lavakumar/hawas</project_home>
+      <works_on_session>no</works_on_session>
+      <works_on_url>no</works_on_url>
+      <works_on_finding>no</works_on_finding>
+      <description>A tool for analyzing the HTTP Proxy logs inside IronWASP and identifying interesting patterns and information. HAWAS identifies and decodeds encoded parameter values. Identifies and attempts to crack hashed parameter values. Highlights areas where user input might be stored on the server and reflected back as they are potential stored XSS candidates. It also lists all the parameter names and parameter values from the log for easy analysis by the tester.</description>
+    </module>
+  </category>
+  <category>
+    <name>SAP Security</name>
+    <module>
+	  <name>IronSAP</name>
+	  <version>0.2</version>
+	  <display_name>IronSAP - SAP Security Scanner</display_name>
+	  <author>Prasanna K</author>
+  	  <project_home>https://github.com/prasanna2204/IronSAP</project_home>
+	  <works_on_session>no</works_on_session>
+  	  <works_on_url>yes</works_on_url>
+	  <works_on_finding>yes</works_on_finding>
+  	  <description>https://github.com/prasanna2204/IronSAP</description>
+    </module>
+  </category>
+  <category>
+    <name>Scanners</name>
+	<module>
+	  <name>SSLSecurityChecker</name>
+      <version>0.1</version>
+      <display_name>SSL Security Checker</display_name>
+  	  <author>Manish Saindane</author>
+  	  <project_home>https://github.com/GDSSecurity/SSLSecurityChecker</project_home>
+  	  <works_on_session>no</works_on_session>
+	  <works_on_url>no</works_on_url>
+	  <works_on_finding>no</works_on_finding>
+	  <description>This is ported from the code found at http://www.bolet.org/TestSSLServer/ which was written by Thomas Pornin [pornin@bolet.org]. All credits for the orignal code goes to him.</description>
+	</module>
+  </category>
+  <category>
+    <name>Utilities</name>
+    <module>
+      <name>BodySaver</name>
+      <version>0.1</version>
+      <display_name>BodySaver - Save the body of the selected response to a file</display_name>
+      <author>Lavakumar Kuppan</author>
+      <project_home>https://github.com/lavakumar/bodysaver</project_home>
+      <works_on_session>yes</works_on_session>
+      <works_on_url>no</works_on_url>
+      <works_on_finding>no</works_on_finding>
+      <description>Saves the body of the response on which this module was run to a file of the user's choosing. </description>
+    </module>
+  </category>
+  <category>
+    <name>Exploitation</name>
+    <module>
+      <name>CSRFPOCGenerator</name>
+      <version>0.2</version>
+      <display_name>CSRF PoC Generator - Creates HTML file to recreate selected request from the browser</display_name>
+      <author>Jayesh Singh Chauhan @jayeshsch</author>
+      <project_home>https://github.com/jayeshchauhan</project_home>
+      <works_on_session>yes</works_on_session>
+      <works_on_url>no</works_on_url>
+      <works_on_finding>no</works_on_finding>
+      <description>Create a PoC for CSRF attacks in a split second. Right click any log and run this module to create a HTML file. When this file is opened from the browser, the browser will send a request similar to the one on which this module was run. It supports requests that have normal body format and also JSON and XML request body formats.</description>
+    </module>
+    <module>
+      <name>Skanda</name>
+      <version>0.1</version>
+      <display_name>OWASP Skanda - SSRF Exploitation Framework</display_name>
+      <author>Jayesh Singh Chauhan @jayeshsch</author>
+      <project_home>https://www.owasp.org/index.php/OWASP_Skanda_SSRF_Exploitation_Framework</project_home>
+      <works_on_session>yes</works_on_session>
+      <works_on_url>no</works_on_url>
+      <works_on_finding>no</works_on_finding>
+      <description>Performs port scan on a server vulnerable to Server-side Request Forgery vulnerability(SSRF). Right click on any log and run this module. Select the vulnerable injection points(GET/POST parameters) and session plugins if any are required. Port Status will be printed in the CLI.</description>
+    </module>
+  </category>
+</modules>

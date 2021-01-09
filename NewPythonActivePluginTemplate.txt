@@ -1,0 +1,15 @@
+from IronWASP import *
+from System import *
+import clr
+
+#Inherit from the base ActivePlugin class
+class <Plugin Name>(ActivePlugin):
+
+	#Override the Check method of the base class with custom functionlity
+	def Check(self, req, scnr):
+
+
+p = <Plugin Class Name>()
+p.Name = "Name of the Plugin inside Iron. Pick a short name without spaces and special characters like 'XSS', 'SQLi' etc. Name must be unique across all plugins"
+p.Description = "Short Description of the Plugin, displayed in the Plugins section"
+ActivePlugin.Add(p)

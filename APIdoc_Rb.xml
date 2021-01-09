@@ -1,0 +1,2843 @@
+<api>
+    <class>
+        <name>Request</name>
+        <type>Non-Static</type>
+        <description>Object that represents a HTTP request. [i[br]]Has methods to create and send HTTP requests.</description>
+        <constructors>
+            <constructor>
+                <name>Request.new(string FullUrl)</name>
+                <description>Creates Request object from Url, Request Method defaults to GET.</description>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>FullUrl</name>
+                        <description>Url should include the hostname and scheme. [i[br]]Eg: http://ironwasp.org</description>
+                    </parameter>
+                </parameters>
+            </constructor>
+            <constructor>
+                <name>Request.new(string Method, string FullUrl)</name>
+                <description>Creates Request object from Url and sets the mentioned method.</description>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Method</name>
+                        <description>Request method, Eg: GET or POST</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>FullUrl</name>
+                        <description>Url should include the hostname and scheme. [i[br]]Eg: http://ironwasp.org</description>
+                    </parameter>
+                </parameters>
+            </constructor>
+            <constructor>
+                <name>Request.new(string Method, string FullUrl, string BodyString)</name>
+                <description>Creates Request object from Url, sets the mentioned method and sets the body.</description>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Method</name>
+                        <description>Request method, Eg: GET or POST</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>FullUrl</name>
+                        <description>Url should include the hostname and scheme. [i[br]]Eg: http://ironwasp.org/index.html</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>BodyString</name>
+                        <description>Body of the request as string.</description>
+                    </parameter>
+                </parameters>
+            </constructor>
+        </constructors>
+        <properties>
+            <property>
+		<name>full_url</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>Entire Url along with scheme and hostname.[i[br]]Eg: http://ironwasp.org/index.html</description>
+            </property>
+            <property>
+		<name>url</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>Url without the scheme and hostname.[i[br]]Eg: /main/index.aspx?q=123</description>
+            </property>
+            <property>
+		<name>url_path</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>The Path section of the Url without the QueryString.[i[br]]Eg: /main/index.aspx</description>
+            </property>
+            <property>
+		<name>url_path_parts</name>
+                <datatype>string[]</datatype>
+                <type>Non-Static</type>
+                <description>Array of strings where each element is a part of the UrlPath property.[i[br]]Eg: ['main','index.aspx']</description>
+            </property>
+            <property>
+		<name>ssl</name>
+                <datatype>bool</datatype>
+                <type>Non-Static</type>
+                <description>Bool value stating if the request is a SSL request or not. [i[br]]Set this to True to create a SSL request.</description>
+            </property>
+            <property>
+		<name>http_method</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>HTTP Method of the Request. [i[br]]Eg: GET, POST etc.</description>
+            </property>
+            <property>
+		<name>http_version</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>Version number of the HTTP Request - HTTP/1.1 or HTTP/1.0</description>
+            </property>
+            <property>
+		<name>query</name>
+                <datatype>Parameters</datatype>
+                <type>Non-Static</type>
+                <description>Contains the QueryString parameters in a list of Key/Value pairs. [i[br]]Access these parameters using the methods of the Parameter Class</description>
+            </property>
+            <property>
+		<name>body</name>
+                <datatype>Parameters</datatype>
+                <type>Non-Static</type>
+                <description>Contains the Request Body parameters in a list of Key/Value pairs. [i[br]]Access these parameters using the methods of the Parameter Class</description>
+            </property>
+            <property>
+		<name>cookie</name>
+                <datatype>Parameters</datatype>
+                <type>Non-Static</type>
+                <description>Contains the Cookie parameters in a list of Key/Value pairs. [i[br]]Access these parameters using the methods of the Parameter Class</description>
+            </property>
+            <property>
+		<name>headers</name>
+                <datatype>Parameters</datatype>
+                <type>Non-Static</type>
+                <description>Contains the Request Headers  in a list of Key/Value pairs. [i[br]]Access these parameters using the methods of the Parameter Class</description>
+            </property>
+            <property>
+		<name>host</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>Hostname of the target server. [i[br]]Eg: www.ironwasp.org</description>
+            </property>
+            <property>
+		<name>has_body</name>
+                <datatype>bool</datatype>
+                <type>Non-Static</type>
+                <description>[READ-ONLY] Boolean value representing the presence of a Body in the Request.</description>
+            </property>
+            <property>
+		<name>body_string</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>Entire Body of the Request as a single string. [i[br]]Encoding charset used is taken from the Content-Type header or ISO-8859-1 is used if none is present.</description>
+            </property>
+            <property>
+		<name>binary_body_string</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>Entire Body of the Request as a Base64 encoded string. [i[br]]If a Binary Request body must be assigned then it can be assigned to this property or to the body_array property.[i[br]](IronWASP stores binary body as base64 string in its logs).</description>
+            </property>
+            <property>
+		<name>body_array</name>
+                <datatype>byte[]</datatype>
+                <type>Non-Static</type>
+                <description>Entire Body of the Request as a Byte Array.</description>
+            </property>
+            <property>
+		<name>body_length</name>
+                <datatype>int</datatype>
+                <type>Non-Static</type>
+                <description>Length of the Request Body.</description>
+            </property>
+            <property>
+		<name>cookie_string</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>Gives the value of the 'Cookie' header of the Request. [i[br]]This property can be assigned a new string to update the Cookie value as well.</description>
+            </property>
+            <property>
+		<name>content_type</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>Value of the Content-Type Header, including the Charset information(if present).</description>
+            </property>
+            <property>
+		<name>is_binary</name>
+                <datatype>bool</datatype>
+                <type>Non-Static</type>
+                <description>[READ-ONLY] Boolean value indicating if the Body of the Request is in text or binary format. [i[br]] This property can be controlled by setting a suitable value in the HTTP API section of the config panel</description>
+            </property>
+            <property>
+		<name>response</name>
+                <datatype>Response</datatype>
+                <type>Non-Static</type>
+                <description>[READ-ONLY] Response object associated with this Request. [i[br]]Generated on calling the send_req() method.</description>
+            </property>
+        </properties>
+        <methods>
+            <method>
+		<name>send_req()</name>
+                <type>Non-Static</type>
+                <parameters></parameters>
+		<return>response</return>
+                <description>Sends the request to the server and returns the Response object. [i[br]]Call blocks the thread.</description>
+            </method>
+            <method>
+		<name>follow(Response ResponseToFollow)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>Response</datatype>
+                        <name>ResponseToFollow</name>
+                        <description>A 3xx response that must be followed</description>
+                    </parameter>
+                </parameters>
+		<return>response</return>
+                <description>If the response status code is a 301, 302, 303 or 307 then it is followed else the response passed in is returned.</description>
+            </method>
+            <method>
+		<name>get_redirect(Response RedirectResponse)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>Response</datatype>
+                        <name>RedirectResponse</name>
+                        <description>Response to the Request which contains a Redirect header</description>
+                    </parameter>
+                </parameters>
+		<return>request</return>
+                <description>If the response status code is a 301, 302, 303 or 307 then the a Request object specific to follow the redirection is returned.[i[br]]If the Response is not a redirect then a null value is returned.</description>
+            </method>
+            <method>
+		<name>set_cookie(Response Res)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>Response</datatype>
+                        <name>Res</name>
+                        <description>IronWASP Response object</description>
+                    </parameter>
+                </parameters>
+		<return>none</return>
+                <description>Reads the contents of the Set-Cookie headers from the Response object and adds them as cookies in the Request.</description>
+            </method>
+            <method>
+		<name>set_cookie(SetCookie[] SetCookies)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>SetCookie[]</datatype>
+                        <name>SetCookies</name>
+                        <description>A list of SetCookie objects. This is usually the SetCookies property of the IronWASP Response object.</description>
+                    </parameter>
+                </parameters>
+		<return>none</return>
+                <description>Sets the Cookie of the request with the provided value.</description>
+            </method>
+            <method>
+		<name>set_cookie(SetCookie SetCookieObject)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>SetCookie</datatype>
+                        <name>SetCookieObject</name>
+                        <description>A SetCookie object</description>
+                    </parameter>
+                </parameters>
+		<return>none</return>
+                <description>Sets the Cookie of the request with the provided value.</description>
+            </method>
+            <method>
+		<name>set_cookie(CookieStore Store)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>CookieStore</datatype>
+                        <name>Store</name>
+                        <description>CookieStore object where cookies are stored</description>
+                    </parameter>
+                </parameters>
+		<return>none</return>
+                <description>Reads the CookieStore objects and the Cookies relevant to this Request are added. [i[br]]Revelant cookies are picked based on the Host, Path and Secure attributes of the cookies stored in the CookieStore.</description>
+            </method>
+            <method>
+		<name>get_body_encoding()</name>
+                <type>Non-Static</type>
+                <parameters></parameters>
+		<return>string</return>
+                <description>Returns the Encoding Charset of the request from the Content-Type header. [i[br]]If no Charset is specified then ISO-8859-1 is returned.</description>
+            </method>
+            <method>
+		<name>get_headers_as_string()</name>
+                <type>Non-Static</type>
+                <parameters></parameters>
+		<return>string</return>
+                <description>Returns the entire Request header section containing the method, url, HTTP version and headers as a single string.</description>
+            </method>
+            <method>
+		<name>to_string()</name>
+                <type>Non-Static</type>
+                <parameters></parameters>
+		<return>string</return>
+                <description>Returns the entire Request as a single string.</description>
+            </method>
+            <method>
+		<name>to_binary_string()</name>
+                <type>Non-Static</type>
+                <parameters></parameters>
+		<return>string</return>
+                <description>Returns the entire Request as a specially formatted string that preserves any binary content in the request body.</description>
+            </method>
+            <method>
+		<name>get_full_request_as_byte_array()</name>
+                <type>Non-Static</type>
+                <parameters></parameters>
+		<return>byte_[]</return>
+                <description>Returns the entire Request header section containing the method, url, HTTP version and headers as a Byte Array.</description>
+            </method>
+            <method>
+		<name>from_proxy_log(int ID)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>int</datatype>
+                        <name>ID</name>
+                        <description>ID of the Request in the Proxy Log.</description>
+                    </parameter>
+                </parameters>
+		<return>request</return>
+                <description>Creates a Request object from the specified record in the Proxy Log and returns it.</description>
+            </method>
+            <method>
+		<name>from_proxy_log()</name>
+                <type>Static</type>
+                <parameters></parameters>
+		<return>request_[]</return>
+                <description>Creates an array of all Request objects from the Proxy Log and returns it.</description>
+            </method>
+            <method>
+		<name>from_test_log(int ID)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>int</datatype>
+                        <name>ID</name>
+                        <description>ID of the Request in the Manual Testing Log.</description>
+                    </parameter>
+                </parameters>
+		<return>request</return>
+                <description>Creates a Request object from the specified record in the Manual Testing Log and returns it.</description>
+            </method>
+            <method>
+		<name>from_test_log()</name>
+                <type>Static</type>
+                <parameters></parameters>
+		<return>request_[]</return>
+                <description>Creates an array of all Request objects from the Manual Testing Log and returns it.</description>
+            </method>
+            <method>
+		<name>from_probe_log(int ID)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>int</datatype>
+                        <name>ID</name>
+                        <description>ID of the Request in the Probe Log.</description>
+                    </parameter>
+                </parameters>
+		<return>request</return>
+                <description>Creates a Request object from the specified record in the Probe Log (Crawler) and returns it.</description>
+            </method>
+            <method>
+		<name>from_probe_log()</name>
+                <type>Static</type>
+                <parameters></parameters>
+		<return>request_[]</return>
+                <description>Creates an array of all Request objects from the Probe Log(Crawler) and returns it.</description>
+            </method>
+            <method>
+		<name>from_shell_log(int ID)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>int</datatype>
+                        <name>ID</name>
+                        <description>ID of the Request in the Scripting Shell Log.</description>
+                    </parameter>
+                </parameters>
+		<return>request</return>
+                <description>Creates a Request object from the specified record in the Scripting Shell Log and returns it.</description>
+            </method>
+            <method>
+		<name>from_shell_log()</name>
+                <type>Static</type>
+                <parameters></parameters>
+		<return>request_[]</return>
+                <description>Creates an array of all Request objects from the Scripting Shell Log and returns it.</description>
+            </method>
+            <method>
+		<name>from_scan_log(int ID)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>int</datatype>
+                        <name>ID</name>
+                        <description>ID of the Request in the 'Automated Scanning' Log.</description>
+                    </parameter>
+                </parameters>
+		<return>request</return>
+                <description>Creates a Request object from the specified record in the 'Automated Scanning' Log and returns it.</description>
+            </method>
+            <method>
+		<name>from_scan_log()</name>
+                <type>Static</type>
+                <parameters></parameters>
+		<return>request_[]</return>
+                <description>Creates an array of all Request objects from the 'Automated Scanning' Log and returns it.</description>
+            </method>
+            <method>
+		<name>from_string(string RequestString)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>RequestString</name>
+                        <description>String representing the entire request, usually the output of the to_string() method.</description>
+                    </parameter>
+                </parameters>
+		<return>request</return>
+                <description>Creates a Request object from the string and returns it.</description>
+            </method>
+            <method>
+		<name>from_binary_string(string RequestBinaryString)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>RequestString</name>
+                        <description>Specially formatted binary string representing the entire request, the output of the to_binary_string() method.</description>
+                    </parameter>
+                </parameters>
+		<return>request</return>
+                <description>Creates a Request object from the string and returns it.</description>
+            </method>
+            <method>
+		<name>get_id()</name>
+                <type>Non-Static</type>
+                <parameters></parameters>
+		<return>int</return>
+                <description>Returns the ID of the Request object in its respective log.</description>
+            </method>
+        </methods>
+    </class>
+    <class>
+        <name>Response</name>
+        <type>Non-Static</type>
+        <description>Object that represents a HTTP response. Has methods to read and analyze the response.</description>
+        <constructors>
+        </constructors>
+        <properties>
+            <property>
+		<name>code</name>
+                <datatype>int</datatype>
+                <type>Non-Static</type>
+                <description>[READ-ONLY] Status code of the response. [i[br]]Eg: 200</description>
+            </property>
+            <property>
+		<name>status</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>[READ-ONLY] Status description of the response. [i[br]]Eg: OK</description>
+            </property>
+            <property>
+		<name>http_version</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>[READ-ONLY] HTTP Version of the response.[i[br]]Eg: HTTP/1.1</description>
+            </property>
+            <property>
+		<name>set_cookies</name>
+                <datatype>SetCookie[]</datatype>
+                <type>Non-Static</type>
+                <description>A collection of SetCookie objects. This is built by parsing the 'Set-Cookie' headers in the Response</description>
+            </property>
+            <property>
+		<name>headers</name>
+                <datatype>Parameters</datatype>
+                <type>Non-Static</type>
+                <description>Contains the Request Headers  in a list of Key/Value pairs. [i[br]]Access these parameters using the methods of the Parameter Class</description>
+            </property>
+            <property>
+		<name>is_binary</name>
+                <datatype>bool</datatype>
+                <type>Non-Static</type>
+                <description>[READ-ONLY] Boolean value indicating if the Body of the Response is in text or binary format. [i[br]] This property can be controlled by setting a suitable value in the HTTP API section of the config panel</description>
+            </property>
+            <property>
+		<name>has_body</name>
+                <datatype>bool</datatype>
+                <type>Non-Static</type>
+                <description>[READ-ONLY] Boolean value representing the presence of a Body in the Response.</description>
+            </property>
+            <property>
+		<name>body_string</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>Body of the response represented as a string.</description>
+            </property>
+            <property>
+		<name>binary_body_string</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>Body of the response represented as a Base64 encoded string.</description>
+            </property>
+            <property>
+		<name>body_array</name>
+                <datatype>byte[]</datatype>
+                <type>Non-Static</type>
+                <description>Body of the response represented as a Byte Array.</description>
+            </property>
+            <property>
+		<name>body_encoding</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>Content Encoding used for the Response Body.</description>
+            </property>
+            <property>
+		<name>html</name>
+                <datatype>HTML</datatype>
+                <type>Non-Static</type>
+                <description>Body of the Response represented as a HTML object.</description>
+            </property>
+            <property>
+		<name>is_html</name>
+                <datatype>bool</datatype>
+                <type>Non-Static</type>
+                <description>[READ-ONLY] Boolean value indicating if the Body of the Response is HTML text or not.</description>
+            </property>
+            <property>
+		<name>is_java_script</name>
+                <datatype>bool</datatype>
+                <type>Non-Static</type>
+                <description>[READ-ONLY] Boolean value indicating if the Body of the Response is valid JavaScript text or not.</description>
+            </property>
+            <property>
+		<name>is_css</name>
+                <datatype>bool</datatype>
+                <type>Non-Static</type>
+                <description>[READ-ONLY] Boolean value indicating if the Body of the Response is valid CSS text or not.</description>
+            </property>
+            <property>
+		<name>is_xml</name>
+                <datatype>bool</datatype>
+                <type>Non-Static</type>
+                <description>[READ-ONLY] Boolean value indicating if the Body of the Response is valid XML text or not.</description>
+            </property>
+            <property>
+		<name>is_json</name>
+                <datatype>bool</datatype>
+                <type>Non-Static</type>
+                <description>[READ-ONLY] Boolean value indicating if the Body of the Response is valid JSON text or not.</description>
+            </property>
+        </properties>
+        <methods>
+            <method>
+		<name>to_string()</name>
+                <type>Non-Static</type>
+                <parameters></parameters>
+		<return>string</return>
+                <description>Returns the entire Response as a single string.</description>
+            </method>
+        </methods>
+    </class>
+    <class>
+        <name>Session</name>
+        <type>Non-Static</type>
+        <description>Represents an HTTP transaction, contains a Request and a Response object.</description>
+        <constructors>
+        </constructors>
+        <properties>
+            <property>
+		<name>request</name>
+                <datatype>Request</datatype>
+                <type>Non-Static</type>
+                <description>The Request object stored inside the Session.</description>
+            </property>
+            <property>
+		<name>response</name>
+                <datatype>Response</datatype>
+                <type>Non-Static</type>
+                <description>The Response corresponding to the Request object, if available.</description>
+            </property>
+        </properties>
+        <methods>
+            <method>
+		<name>from_proxy_log(int ID)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>int</datatype>
+                        <name>ID</name>
+                        <description>ID of the Session in the Proxy Log.</description>
+                    </parameter>
+                </parameters>
+		<return>session</return>
+                <description>Creates an Session object from the specified record in the Proxy Log and returns it.</description>
+            </method>
+            <method>
+		<name>from_proxy_log()</name>
+                <type>Static</type>
+                <parameters></parameters>
+		<return>session_[]</return>
+                <description>Creates an array of all Session objects from the Proxy Log and returns it.</description>
+            </method>
+            <method>
+		<name>from_test_log(int ID)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>int</datatype>
+                        <name>ID</name>
+                        <description>ID of the Session in the Manual Testing Log.</description>
+                    </parameter>
+                </parameters>
+		<return>session</return>
+                <description>Creates an Session object from the specified record in the Manual Testing Log and returns it.</description>
+            </method>
+            <method>
+		<name>from_test_log()</name>
+                <type>Static</type>
+                <parameters></parameters>
+		<return>session_[]</return>
+                <description>Creates an array of all Session objects from the Manual Testing Log and returns it.</description>
+            </method>
+            <method>
+		<name>from_probe_log(int ID)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>int</datatype>
+                        <name>ID</name>
+                        <description>ID of the Session in the Probe Log.</description>
+                    </parameter>
+                </parameters>
+		<return>session</return>
+                <description>Creates an Session object from the specified record in the Probe Log(Crawler) and returns it.</description>
+            </method>
+            <method>
+		<name>from_probe_log()</name>
+                <type>Static</type>
+                <parameters></parameters>
+		<return>session_[]</return>
+                <description>Creates an array of all Session objects from the Probe Log(Crawler) and returns it.</description>
+            </method>
+            <method>
+		<name>from_shell_log(int ID)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>int</datatype>
+                        <name>ID</name>
+                        <description>ID of the Session in the Scripting Shell Log.</description>
+                    </parameter>
+                </parameters>
+		<return>session</return>
+                <description>Creates an Session object from the specified record in the Scripting Shell Log and returns it.</description>
+            </method>
+            <method>
+		<name>from_shell_log()</name>
+                <type>Static</type>
+                <parameters></parameters>
+		<return>session_[]</return>
+                <description>Creates an array of all Session objects from the Scripting Shell Log and returns it.</description>
+            </method>
+            <method>
+		<name>from_scan_log(int ID)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>int</datatype>
+                        <name>ID</name>
+                        <description>ID of the Session in the 'Automated Scanning' Log.</description>
+                    </parameter>
+                </parameters>
+		<return>session</return>
+                <description>Creates an Session object from the specified record in the 'Automated Scanning' Log and returns it.</description>
+            </method>
+            <method>
+		<name>from_scan_log()</name>
+                <type>Static</type>
+                <parameters></parameters>
+		<return>session_[]</return>
+                <description>Creates an array of all Session objects from the 'Automated Scanning' Log and returns it.</description>
+            </method>
+            <method>
+		<name>get_id()</name>
+                <type>Non-Static</type>
+                <parameters></parameters>
+		<return>int</return>
+                <description>Returns the ID of the Session object in its respective log.</description>
+            </method>
+        </methods>
+    </class>
+    <class>
+        <name>Parameters</name>
+        <type>Non-Static</type>
+        <description>Base class for the QueryParameters, BodyParameters, HeaderParameters and CookieParameter classes. Used to store Key-Value pairs. Key is a string and Value is a list of strings.[i[br]] The Keys for HeaderParameters are case-insensitive, for others it is case-sensitive.</description>
+        <constructors>
+        </constructors>
+        <properties>
+            <property>
+		<name>count</name>
+                <datatype>int</datatype>
+                <type>Non-Static</type>
+                <description>Number of Parameters present in this object.</description>
+            </property>
+        </properties>
+        <methods>
+            <method>
+		<name>get(string Name)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Name</name>
+                        <description>Name of the parameter</description>
+                    </parameter>
+                </parameters>
+		<return>string</return>
+                <description>Returns the value of the parameter with the given name in the same decoded form as the application would see it. [i[br]]For example in the Url 'http://example.org/a?q=a%23b' the value of Query parameter 'q' will be returned as 'a#b' by the Get method as it will properly decode it before returning.</description>
+            </method>
+            <method>
+		<name>raw_get(string Name)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Name</name>
+                        <description>Name of the parameter</description>
+                    </parameter>
+                </parameters>
+		<return>string</return>
+                <description>Returns the raw value of the parameter with the given name, as it appears in the HTTP Request string that is sent over the network. [i[br]]Depending on if this is Query/Body/Header/Cookie parameter the value will be the appropriate encoded form.[i[br]]For example in the Url 'http://example.org/a?q=a%23b' the value of Query parameter 'q' will be returned as 'a%23b' by RawGet method, whereas the Get method would decode it and return as 'a#b'.</description>
+            </method>
+            <method>
+		<name>get_names()</name>
+                <type>Non-Static</type>
+                <parameters></parameters>
+		<return>string_[]</return>
+                <description>Returns the Names of all the parameters as a list. The form of parameter names is the same decoded form as the application would see it.[i[br]]For example in the Url 'http://example.org/a?q%23r=ab' the value of Query parameter name will be returned as 'q#r' by GetNames method.</description>
+            </method>
+            <method>
+		<name>raw_get_names()</name>
+                <type>Non-Static</type>
+                <parameters></parameters>
+		<return>string_[]</return>
+                <description>Returns the Names of all the parameters as a list. The form of the parameter names is as it appears in the HTTP Request string that is sent over the network. [i[br]]Depending on if this is Query/Body/Header/Cookie parameter name the value will be the appropriate encoded form.[i[br]]For example in the Url 'http://example.org/a?q%23r=ab' the value of Query parameter name will be returned as 'q%23r' by RawGetNames method, whereas the GetNames method would decode it and return as 'q#r'.</description>
+            </method>
+            <method>
+		<name>get_all(string Name)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Name</name>
+                        <description>Name of the parameter</description>
+                    </parameter>
+                </parameters>
+		<return>string_[]</return>
+                <description>Returns all values of the parameters with the given name. The form of the parameter values is the same decoded form as the application would see it(Refer Get for example). [i[br]]Used when there are two or more parameters with the same name.</description>
+            </method>
+            <method>
+		<name>raw_get_all(string Name)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Name</name>
+                        <description>Name of the parameter</description>
+                    </parameter>
+                </parameters>
+		<return>string_[]</return>
+                <description>Returns all values of the parameters with the given name. The form of the parameter values is as they appear in the HTTP Request string that is sent over the network (Refer RawGet for example).[i[br]]Used when there are two or more parameters with the same name.</description>
+            </method>
+            <method>
+		<name>set(string Name, string Value)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Name</name>
+                        <description>Name of the parameter</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Value</name>
+                        <description>Value of the parameter in the decoded form you want the application to see it. [i[br]]Eg: If set('q', 'a+b') is called on Query parameter of a Request then the in the Url it would become '?q=a%2bb' and so the value of q will be read by the application as 'a+b', as originally set.</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Adds the Name/Value pair to the parameters list. [i[br]] If a parameter with that name exisits then it is overwritten.</description>
+            </method>
+            <method>
+		<name>raw_set(string Name, string Value)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Name</name>
+                        <description>Name of the parameter</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Value</name>
+                        <description>Value of the parameter in the encoded form as it appears in the HTTP Request string that is sent over the network. [i[br]]Eg: If raw_set('q', 'a+b') is called on Query parameter of a Request then in the Url it would become '?q=a+b' and so the value of q will be read by the application as 'a b'.</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Adds the Name/Value pair to the parameters list. [i[br]] If a parameter with that name exisits then it is overwritten.</description>
+            </method>
+            <method>
+		<name>set_at(string Name, int SubParameterPosition, string Value)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Name</name>
+                        <description>Name of the parameter</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>int</datatype>
+                        <name>SubParameterPosition</name>
+                        <description>When there are two or more parameters with the same name then this indicates the zero-based index of the parameter position that must be set</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Value</name>
+                        <description>Value of the parameter in the decoded form you want the application to see it.</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Adds the Name/Value pair to the parameters list at a specified position if two or more parameters exist with the same name. [i[br]] If a parameter with that name exisits then it is overwritten.</description>
+            </method>
+            <method>
+		<name>raw_set_at(string Name, int SubParameterPosition, string Value)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Name</name>
+                        <description>Name of the parameter</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>int</datatype>
+                        <name>SubParameterPosition</name>
+                        <description>When there are two or more parameters with the same name then this indicates the zero-based index of the parameter position that must be set</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Value</name>
+                        <description>Value of the parameter in the encoded form as it appears in the HTTP Request string that is sent over the network.</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Adds the Name/Value pair to the parameters list at a specified position if two or more parameters exist with the same name. [i[br]] If a parameter with that name exisits then it is overwritten.</description>
+            </method>
+            <method>
+		<name>set(string Name, string[] Values)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Name</name>
+                        <description>Name of the parameter</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string[]</datatype>
+                        <name>Values</name>
+                        <description>Array of multiple values for the same parameter. The values are in the decoded form you want the application to see it.</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Adds the Name/Value pair to the parameters list. [i[br]] If a parameter with that name exisits then it is overwritten.</description>
+            </method>
+            <method>
+		<name>raw_set(string Name, string[] Values)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Name</name>
+                        <description>Name of the parameter</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string[]</datatype>
+                        <name>Values</name>
+                        <description>Array of multiple values for the same parameter. The values of the parameter in the encoded form as it appears in the HTTP Request string that is sent over the network.</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Adds the Name/Value pair to the parameters list. [i[br]] If a parameter with that name exisits then it is overwritten.</description>
+            </method>
+            <method>
+		<name>add(string Name, string Value)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Name</name>
+                        <description>Name of the parameter</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Value</name>
+                        <description>Value of the parameter in the decoded form you want the application to see it. [i[br]]Eg: If add('q', 'a+b') is called on Query parameter of a Request then the in the Url it would become '?q=a%2bb' and so the value of q will be read by the application as 'a+b', as originally set.</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Adds the Name/Value pair to the parameters list. [i[br]]If a parameter with that name exisits then this value is appened to the exisiting list.</description>
+            </method>
+            <method>
+		<name>raw_add(string Name, string Value)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Name</name>
+                        <description>Name of the parameter</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Value</name>
+                        <description>Value of the parameter in the encoded form as it appears in the HTTP Request string that is sent over the network. [i[br]]Eg: If raw_add('q', 'a+b') is called on Query parameter of a Request then in the Url it would become '?q=a+b' and so the value of q will be read by the application as 'a b'.</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Adds the Name/Value pair to the parameters list. [i[br]]If a parameter with that name exisits then this value is appened to the exisiting list.</description>
+            </method>
+            <method>
+		<name>remove(string Name)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Name</name>
+                        <description>Name of the parameter</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Removes the specified parameter from the list.</description>
+            </method>
+            <method>
+		<name>remove_all()</name>
+                <type>Non-Static</type>
+                <parameters></parameters>
+		<return>void</return>
+                <description>Removes all parameters from the list.</description>
+            </method>
+            <method>
+		<name>has(string Name)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Name</name>
+                        <description>Name of the parameter</description>
+                    </parameter>
+                </parameters>
+		<return>bool</return>
+                <description>Checks if the given parameter name exists in the list and returns a bool value.</description>
+            </method>
+            <method>
+		<name>get_multis()</name>
+                <type>Non-Static</type>
+                <parameters></parameters>
+		<return>string_[]</return>
+                <description>Returns the name of the parameters that have multiple values. [i[br]]Use GetAll to get those values.</description>
+            </method>
+        </methods>
+    </class>
+    <class>
+        <name>Tools</name>
+        <type>Static</type>
+        <description>Collection of commonly required utilities</description>
+        <constructors>
+        </constructors>
+        <properties>
+        </properties>
+        <methods>
+            <method>
+		<name>url_encode(string Input)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Input</name>
+                        <description>String to encode</description>
+                    </parameter>
+                </parameters>
+		<return>string</return>
+                <description>Returns a Url-Encoded version of the input.</description>
+            </method>
+            <method>
+		<name>html_encode(string Input)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Input</name>
+                        <description>String to encode</description>
+                    </parameter>
+                </parameters>
+		<return>string</return>
+                <description>Returns a HTML-encoded version of the input.</description>
+            </method>
+            <method>
+		<name>base64_encode(string Input)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Input</name>
+                        <description>String to encode</description>
+                    </parameter>
+                </parameters>
+		<return>string</return>
+                <description>Returns a Base64-encoded version of the input.</description>
+            </method>
+            <method>
+		<name>to_hex(string Input)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Input</name>
+                        <description>String to encode</description>
+                    </parameter>
+                </parameters>
+		<return>string</return>
+                <description>Converts all characters to HEX string and returns it.</description>
+            </method>
+            <method>
+		<name>to_hex(byte[] Input)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>byte[]</datatype>
+                        <name>Input</name>
+                        <description>ByteArray to encode</description>
+                    </parameter>
+                </parameters>
+		<return>string</return>
+                <description>Converts all bytes to HEX string and returns it.</description>
+            </method>
+            <method>
+		<name>hex_encode(string Input)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Input</name>
+                        <description>String to encode</description>
+                    </parameter>
+                </parameters>
+		<return>string</return>
+                <description>Converts all characters to HEX string with a preceding '%' and returns it.</description>
+            </method>
+            <method>
+		<name>xml_encode(string Input)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Input</name>
+                        <description>String to encode</description>
+                    </parameter>
+                </parameters>
+		<return>string</return>
+                <description>Encodes the Input to make it suitable to be added as a XML node's value</description>
+            </method>
+            <method>
+		<name>url_decode(string Input)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Input</name>
+                        <description>String to decode</description>
+                    </parameter>
+                </parameters>
+		<return>string</return>
+                <description>Returns a Url-Decoded version of the input.</description>
+            </method>
+            <method>
+		<name>html_decode(string Input)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Input</name>
+                        <description>String to decode</description>
+                    </parameter>
+                </parameters>
+		<return>string</return>
+                <description>Returns a HTML-Decoded version of the input.</description>
+            </method>
+            <method>
+		<name>base64_decode(string Input)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Input</name>
+                        <description>String to decode</description>
+                    </parameter>
+                </parameters>
+		<return>string</return>
+                <description>Returns a Base64-Decoded version of the input.</description>
+            </method>
+            <method>
+		<name>base64_decode_to_hex(string Input)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Input</name>
+                        <description>String to decode</description>
+                    </parameter>
+                </parameters>
+		<return>string</return>
+                <description>Base64 decodes the Input and returns the results as a Hex string.</description>
+            </method>
+            <method>
+		<name>hex_decode(string Input)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Input</name>
+                        <description>String to decode</description>
+                    </parameter>
+                </parameters>
+		<return>string</return>
+                <description>Converts all the HEX characters to ascii equivalents.</description>
+            </method>
+            <method>
+		<name>md5(string Input)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Input</name>
+                        <description>String to Hash</description>
+                    </parameter>
+                </parameters>
+		<return>string</return>
+                <description>Creates a MD5 hash of the input.</description>
+            </method>
+            <method>
+		<name>sha1(string Input)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Input</name>
+                        <description>String to Hash</description>
+                    </parameter>
+                </parameters>
+		<return>string</return>
+                <description>Creates a SHA1 hash of the input.</description>
+            </method>
+            <method>
+		<name>sha256(string Input)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Input</name>
+                        <description>String to Hash</description>
+                    </parameter>
+                </parameters>
+		<return>string</return>
+                <description>Creates a SHA256 hash of the input.</description>
+            </method>
+            <method>
+		<name>sha384(string Input)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Input</name>
+                        <description>String to Hash</description>
+                    </parameter>
+                </parameters>
+		<return>string</return>
+                <description>Creates a SHA384 hash of the input.</description>
+            </method>
+            <method>
+		<name>sha512(string Input)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Input</name>
+                        <description>String to Hash</description>
+                    </parameter>
+                </parameters>
+		<return>string</return>
+                <description>Creates a SHA512 hash of the input.</description>
+            </method>
+            <method>
+		<name>diff(string Source, string Destination)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Source</name>
+                        <description>String to be used as source text</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Destination</name>
+                        <description>String to be used as destination text</description>
+                    </parameter>
+                </parameters>
+		<return>diff_result</return>
+                <description>Does a line-by-line Diff of two multi-line strings and returns a DiffResult object containg the result.</description>
+            </method>
+            <method>
+		<name>diff_line(string Source, string Destination)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Source</name>
+                        <description>String to be used as source text</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Destination</name>
+                        <description>String to be used as destination text</description>
+                    </parameter>
+                </parameters>
+		<return>diff_result</return>
+                <description>Does a word-by-word Diff of single line strings and returns a DiffResult object containg the result.</description>
+            </method>
+            <method>
+		<name>diff_level(string Source, string Destination)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Source</name>
+                        <description>String to be used as source text</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Destination</name>
+                        <description>String to be used as destination text</description>
+                    </parameter>
+                </parameters>
+		<return>int</return>
+                <description>Gives a value between 0 - 100 indicating the percent of difference between the two strings. 0 indicates the two strings are same. 100 indicates the two strings are fully different.</description>
+            </method>
+        </methods>
+    </class>
+    <class>
+        <name>DiffResult</name>
+        <type>Non-Static</type>
+        <description>Represents a result of a Diff of two strings. Returned by the method - Tools.Diff()</description>
+        <constructors>
+        </constructors>
+        <properties>
+            <property>
+		<name>deleted</name>
+                <datatype>int[]</datatype>
+                <type>Non-Static</type>
+                <description>Line numbers in the first string that are not present in the second string</description>
+            </property>
+            <property>
+		<name>missing_at</name>
+                <datatype>int[]</datatype>
+                <type>Non-Static</type>
+                <description>Line numbers in the second string where the deleted sections of first string should have appeared</description>
+            </property>
+            <property>
+		<name>inserted</name>
+                <datatype>int[]</datatype>
+                <type>Non-Static</type>
+                <description>Line numbers in the second string that contain sections not present in the first string</description>
+            </property>
+            <property>
+		<name>un_changed</name>
+                <datatype>int[]</datatype>
+                <type>Non-Static</type>
+                <description>Line numbers in the second string that remain the same as first string</description>
+            </property>
+            <property>
+		<name>deleted_sections</name>
+                <datatype>string[]</datatype>
+                <type>Non-Static</type>
+                <description>Sections of the first string that are not present in the second string</description>
+            </property>
+            <property>
+		<name>inserted_sections</name>
+                <datatype>string[]</datatype>
+                <type>Non-Static</type>
+                <description>Sections of the second string that are not present in the first string</description>
+            </property>
+            <property>
+		<name>un_changed_sections</name>
+                <datatype>string[]</datatype>
+                <type>Non-Static</type>
+                <description>Sections of the second string that are also present in the first string</description>
+            </property>
+        </properties>
+        <methods>
+        </methods>
+    </class>
+    <class>
+        <name>AskUser</name>
+        <type>Static</type>
+        <description>Class that enables scripts to create UI pop-ups and get data from user at run-time.</description>
+        <constructors>
+        </constructors>
+        <properties>
+        </properties>
+        <methods>
+            <method>
+		<name>for_bool(string Title, string Message)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Title</name>
+                        <description>Title of the message, shown at the top of the pop-up window</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Message</name>
+                        <description>Message to be shown to to the user</description>
+                    </parameter>
+                </parameters>
+		<return>bool</return>
+                <description>Shows a pop-up window with the provided title and message along with a 'Yes' and a 'No' button and waits. Returns the user's input as a boolean.</description>
+            </method>
+            <method>
+		<name>for_string(string Title, string Message)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Title</name>
+                        <description>Title of the message, shown at the top of the pop-up window</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Message</name>
+                        <description>Message to be shown to to the user</description>
+                    </parameter>
+                </parameters>
+		<return>bool</return>
+                <description>Shows a pop-up window with the provided title and message along with an input field and a 'Submit' button. Returns the user's input as a string.</description>
+            </method>
+            <method>
+		<name>for_string(string Title, string Message, string ImageFilePath)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Title</name>
+                        <description>Title of the message, shown at the top of the pop-up window</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Message</name>
+                        <description>Message to be shown to to the user</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>ImageFilePath</name>
+                        <description>Full path to any image file on the local hard drive. Eg: Capcha images</description>
+                    </parameter>
+                </parameters>
+		<return>bool</return>
+                <description>Shows a pop-up window with the provided title and message and also displays the image inside this window along with an input field and a 'Submit' button. Returns the user's input as a string.</description>
+            </method>
+        </methods>
+    </class>
+    <class>
+        <name>SetCookie</name>
+        <type>Non-Static</type>
+        <description>Represents all the information available in a Set-Cookie header</description>
+        <constructors>
+            <constructor>
+                <name>SetCookie.new(string SetCookieHeaderString)</name>
+                <description>Parses the a Set-Cookie header and creates a object that gives easy access to the contained information</description>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>SetCookieHeaderString</name>
+                        <description>The Set-Cookie header string</description>
+                    </parameter>
+                </parameters>
+            </constructor>
+        </constructors>
+        <properties>
+            <property>
+		<name>name</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>[READ-ONLY] Name of the key in the key-value pair included in the Set-Cookie header</description>
+            </property>
+            <property>
+		<name>value</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>[READ-ONLY] Value of the key included in the Set-Cookie header</description>
+            </property>
+            <property>
+		<name>full_string</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>[READ-ONLY] Returns the full Set-Cookie header as a single string</description>
+            </property>
+            <property>
+		<name>path</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>[READ-ONLY] Value of the Path attribute</description>
+            </property>
+            <property>
+		<name>domain</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>[READ-ONLY] Value of the Domain attribute</description>
+            </property>
+            <property>
+		<name>expires</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>[READ-ONLY] Value of the Expires attribute</description>
+            </property>
+            <property>
+		<name>max_age</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>[READ-ONLY] Value of the Max-Age attribute</description>
+            </property>
+            <property>
+		<name>http_only</name>
+                <datatype>bool</datatype>
+                <type>Non-Static</type>
+                <description>[READ-ONLY] Boolean value inditicating if the HttpOnly flag is set.</description>
+            </property>
+            <property>
+		<name>secure</name>
+                <datatype>bool</datatype>
+                <type>Non-Static</type>
+                <description>[READ-ONLY] Boolean value inditicating if the Secure flag is set.</description>
+            </property>
+            <property>
+		<name>comment</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>[READ-ONLY] Comments contained in the Set-Cookie header</description>
+            </property>
+            <property>
+		<name>version</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>[READ-ONLY] Version information from the Set-Cookie header</description>
+            </property>
+        </properties>
+    </class>
+    <class>
+        <name>CookieStore</name>
+        <type>Non-Static</type>
+        <description>A store to save Cookies and add them to any Requests</description>
+        <constructors>
+            <constructor>
+                <name>CookieStore.new()</name>
+                <description>Creates a new empty Cookie Store object</description>
+                <parameters>
+                </parameters>
+            </constructor>
+        </constructors>
+        <properties>
+        </properties>
+        <methods>
+            <method>
+		<name>add(Request Req, Response Res)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>Request</datatype>
+                        <name>Req</name>
+                        <description>Request object that was sent to the server</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>Response</datatype>
+                        <name>Res</name>
+                        <description>Response object recieved for the Request</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Updates the CookieStore with the Response object's SetCookie headers</description>
+            </method>
+            <method>
+		<name>add(string Host, string Cookie)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Host</name>
+                        <description>Hostname of the site</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Cookie</name>
+                        <description>Cookie header as a string Eg: "SessionID=sad797asjd2323"</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Updates the CookieStore with the Cookie against the specified Hostname</description>
+            </method>
+            <method>
+		<name>get_cookies()</name>
+                <type>Non-Static</type>
+                <parameters>
+                </parameters>
+		<return>set_cookie_[]</return>
+                <description>Returns a list of SetCookie objects that represent all the cookies stored inside the CookieStore object</description>
+            </method>
+            <method>
+		<name>get_cookies(Request Req)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>Request</datatype>
+                        <name>Req</name>
+                        <description>Request that must be sent to the server</description>
+                    </parameter>
+                </parameters>
+		<return>set_cookie_[]</return>
+                <description>Returns a list of SetCookie objects that represent the matching cookies stored inside the CookieStore object. Matches are done on the Hostname and Path of the Request object and the stored cookies.</description>
+            </method>
+        </methods>
+    </class>
+    <class>
+        <name>HTML</name>
+        <type>Non-Static</type>
+        <description>A class that represents a HTML document and contains methods to traverse it.</description>
+        <constructors>
+            <constructor>
+                <name>HTML.new(string HtmlString)</name>
+                <description>Creates a HTML object from raw string containg HTML tags</description>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>HtmlString</name>
+                        <description>String containg HTML tags, usually the Response Body.</description>
+                    </parameter>
+                </parameters>
+            </constructor>
+        </constructors>
+        <properties>
+            <property>
+		<name>links</name>
+                <datatype>string[]</datatype>
+                <type>Non-Static</type>
+                <description>Lists all the links contained in the HTML document</description>
+            </property>
+            <property>
+		<name>comments</name>
+                <datatype>string[]</datatype>
+                <type>Non-Static</type>
+                <description>Lists all the comments contained in the HTML document</description>
+            </property>
+            <property>
+		<name>html</name>
+                <datatype>HtmlDocument</datatype>
+                <type>Non-Static</type>
+                <description>The base HtmlDocument object of HtmlAgilityPack</description>
+            </property>
+        </properties>
+        <methods>
+            <method>
+		<name>load(string HtmlString)</name>
+                <type>Non-Static</type>
+                <parameters></parameters>
+		<return>void</return>
+                <description>Updates the HTML object with new HtmlString</description>
+            </method>
+            <method>
+		<name>get(string ElementName)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>ElementName</name>
+                        <description>Name of an HTML element. Eg: 'img', 'body' etc </description>
+                    </parameter>
+                </parameters>
+		<return>string_[]</return>
+                <description>Returns all the elements of the given name as strings. [i[br]]Eg: my_html.get("script")</description>
+            </method>
+            <method>
+		<name>get(string ElementName, string AttributeName)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>ElementName</name>
+                        <description>Name of an HTML element. Eg: 'img', 'body' etc </description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>AttributeName</name>
+                        <description>Name of an attribute of the element. Eg: 'src', 'onload' etc </description>
+                    </parameter>
+                </parameters>
+		<return>string_[]</return>
+                <description>Returns matching elements as strings. Elements matched by the element name and the presence of the provided attribute. [i[br]]Eg: my_html.get("script","src")</description>
+            </method>
+            <method>
+		<name>get(string ElementName, string AttributeName, string AttributeValues)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>ElementName</name>
+                        <description>Name of an HTML element. Eg: 'img', 'body' etc </description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>AttributeName</name>
+                        <description>Name of an attribute of the element. Eg: 'src', 'onload' etc </description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>AttributeValue</name>
+                        <description>Value of the Attribute mentioned in the last parameter.</description>
+                    </parameter>
+                </parameters>
+		<return>string_[]</return>
+                <description>Returns matching elements as strings. Elements matched by the element name and the presence of the provided attribute.  [i[br]]Eg: my_html.get("*","class","code")</description>
+            </method>
+            <method>
+		<name>get_values(string ElementName, string AttributeName)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>ElementName</name>
+                        <description>Name of an HTML element. Eg: 'img', 'body' etc </description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>AttributeName</name>
+                        <description>Name of an attribute of the element whose value must be returned. Eg: 'src', 'onload' etc </description>
+                    </parameter>
+                </parameters>
+		<return>string_[]</return>
+                <description>Returns the matching atrribute values as list of strings. Elements matched by the element name and the presence of the provided attribute. [i[br]]Eg: my_html.GetValues("script","src")</description>
+            </method>
+            <method>
+		<name>get_values(string ElementName, string AttributeName, string AttributeValues, string InterestedAttributeName)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>ElementName</name>
+                        <description>Name of an HTML element. Eg: 'img', 'body' etc </description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>AttributeName</name>
+                        <description>Name of an attribute of the element. Eg: 'src', 'onload', 'id' etc </description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>AttributeValue</name>
+                        <description>Value of the Attribute mentioned in the last parameter.</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>InterestedAttributeName</name>
+                        <description>Name of an attribute of the element whose value must be returned. Eg: 'src', 'onload', 'id' etc </description>
+                    </parameter>
+                </parameters>
+		<return>string_[]</return>
+                <description>Returns the interested attribute values as list of strings from the elements matched by the element name and containing the provided attribute name/value pair. the presence of the provided attribute. [i[br]]Eg:  my_html.GetValues("a", "class", "left_nav", "href") will get the 'href' values of only those 'a' tags that have a 'class' attribute with value 'left_nav'</description>
+            </method>
+            <method>
+		<name>get_meta_content(string MetaAttributeName, string MetaAttributeValue)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>MetaAttributeName</name>
+                        <description>Name of an HTML Meta tag attribute. Eg: 'http-equiv' </description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>MetaAttributeValue</name>
+                        <description>Value of the attributes mentioned by the MetaAttributeName parameter. Eg: 'set-cookie' (in case of attribute name 'http-equiv') </description>
+                    </parameter>
+                </parameters>
+		<return>string_[]</return>
+                <description>Returns the value of the 'content' attribute of 'meta' HTML tag that have an attribute matching MetaAttributeName with its value matching as MetaAttributeValue, as list of strings. [i[br]]Eg: my_html.GetMetaContent("http-equiv", "set-cookie")</description>
+            </method>
+            <method>
+		<name>get_nodes(string ElementName)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>ElementName</name>
+                        <description>Name of an HTML element. Eg: 'img', 'body' etc </description>
+                    </parameter>
+                </parameters>
+		<return>html_node_collection</return>
+                <description>Returns all the elements of the given name as HtmlNodeCollection object of HtmlAgilityPack. [i[br]]Eg: my_html.get("script")</description>
+            </method>
+            <method>
+		<name>get_nodes(string ElementName, string AttributeName)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>ElementName</name>
+                        <description>Name of an HTML element. Eg: 'img', 'body' etc </description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>AttributeName</name>
+                        <description>Name of an attribute of the element. Eg: 'src', 'onload' etc </description>
+                    </parameter>
+                </parameters>
+		<return>html_node_collection</return>
+                <description>Returns matching elements as HtmlNodeCollection object of HtmlAgilityPack. Elements matched by the element name and the presence of the provided attribute. [i[br]]Eg: my_html.get("script","src")</description>
+            </method>
+            <method>
+		<name>get_nodes(string ElementName, string AttributeName, string AttributeValues)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>ElementName</name>
+                        <description>Name of an HTML element. Eg: 'img', 'body' etc </description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>AttributeName</name>
+                        <description>Name of an attribute of the element. Eg: 'src', 'onload' etc </description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>AttributeValue</name>
+                        <description>Value of the Attribute mentioned in the last parameter.</description>
+                    </parameter>
+                </parameters>
+		<return>html_node_collection</return>
+                <description>Returns matching elements as HtmlNodeCollection object of HtmlAgilityPack. Elements matched by the element name and the presence of the provided attribute.  [i[br]]Eg: my_html.get("*","class","code")</description>
+            </method>
+            <method>
+		<name>query(string XpathQuery)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>XpathQuery</name>
+                        <description>Xpath Query that must be executed on the Html object. Eg: "//a"</description>
+                    </parameter>
+                </parameters>
+		<return>string_[]</return>
+                <description>Returns all the elements of the given Html object that matched the Xpath Query as strings. [i[br]]Eg: my_html.QueryNodes("//a")</description>
+            </method>
+            <method>
+		<name>query_nodes(string XpathQuery)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>XpathQuery</name>
+                        <description>Xpath Query that must be executed on the Html object. Eg: "//a[@onclick]"</description>
+                    </parameter>
+                </parameters>
+		<return>html_node_collection</return>
+                <description>Returns all the elements of the given name as HtmlNodeCollection object of HtmlAgilityPack that matched the Xpath Query. [i[br]]Eg: my_html.QueryNodes("//a[@onclick]")</description>
+            </method>
+            <method>
+		<name>query_values(string XpathQuery, string AttributeName)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>XpathQuery</name>
+                        <description>Xpath Query that must be executed on the Html object. Eg: "//a[@onclick]"</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>AttributeName</name>
+                        <description>Name of the Attribute whose value must be returned</description>
+                    </parameter>
+                </parameters>
+		<return>string_[]</return>
+                <description>Returns an array of strings containing the value of the Attribute from the Nodes that matched the Xpath Query. [i[br]]Eg: my_html.QueryNodes("//a[@onclick]")</description>
+            </method>
+            <method>
+		<name>get_forms()</name>
+                <type>Non-Static</type>
+                <parameters>
+                </parameters>
+		<return>html_node_[]</return>
+                <description>Returns an array of HtmlNode(HtmlAgilityPack) objects that represent the Forms in the Html object. The HtmlNodes only contain the Form and Input Html elements, unnecessary elements are stripped off. </description>
+            </method>
+            <method>
+		<name>get_java_script()</name>
+                <type>Non-Static</type>
+                <parameters>
+                </parameters>
+		<return>string_[]</return>
+                <description>Returns an array of string containing all the JavaScript from the Script tags and event attributes of the Html</description>
+            </method>
+            <method>
+		<name>get_java_script(string Keyword)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Keyword</name>
+                        <description>A string value set by user, only JavaScript snippets that have this keyword are returned.</description>
+                    </parameter>
+                </parameters>
+		<return>string_[]</return>
+                <description>Returns an array of string containing all the JavaScript that contain the Keyword, from the Script tags and event attributes of the Html</description>
+            </method>
+            <method>
+		<name>get_visual_basic()</name>
+                <type>Non-Static</type>
+                <parameters>
+                </parameters>
+		<return>string_[]</return>
+                <description>Returns an array of string containing all the VisualBasic from the Script tags of the Html</description>
+            </method>
+            <method>
+		<name>get_visual_basic(string Keyword)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Keyword</name>
+                        <description>A string value set by user, only VisualBasic snippets that have this keyword are returned.</description>
+                    </parameter>
+                </parameters>
+		<return>string_[]</return>
+                <description>Returns an array of string containing all the VisualBasic that contain the Keyword, from the Script tags of the Html</description>
+            </method>
+            <method>
+		<name>get_css()</name>
+                <type>Non-Static</type>
+                <parameters>
+                </parameters>
+		<return>string_[]</return>
+                <description>Returns an array of string containing all the CSS from the Style tags and style attributes of the Html</description>
+            </method>
+            <method>
+		<name>get_css(string Keyword)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Keyword</name>
+                        <description>A string value set by user, only CSS snippets that have this keyword are returned.</description>
+                    </parameter>
+                </parameters>
+		<return>string_[]</return>
+                <description>Returns an array of string containing all the CSS that contain the Keyword, from the Style tags and style attributes of the Html</description>
+            </method>
+            <method>
+		<name>xpath_safe(string Input)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Input</name>
+                        <description>The value that must be made Xpath safe</description>
+                    </parameter>
+                </parameters>
+		<return>string</return>
+                <description>Takes the input string and returns an ouput that is fit to be used as an attribute value in a Xpath query.</description>
+            </method>
+            <method>
+		<name>get_context(string Keyword)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Keyword</name>
+                        <description>The Keyword whose context must be found</description>
+                    </parameter>
+                </parameters>
+		<return>string_[]</return>
+                <description>Checks the occurances of the Keyword in the Html and returns the contexts.</description>
+            </method>
+        </methods>
+    </class>
+    <class>
+        <name>ActivePlugin</name>
+        <type>Non-Static</type>
+        <description>An IronPython or IronRuby script that performs some vulnerability checks on the a webpage through active interaction.</description>
+        <constructors>
+        </constructors>
+        <properties>
+            <property>
+		<name>name</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>Name of the Active Plugin</description>
+            </property>
+            <property>
+		<name>description</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>Information about the plugin.</description>
+            </property>
+            <property>
+		<name>version</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>Version number of the Plugin</description>
+            </property>
+        </properties>
+        <methods>
+            <method>
+		<name>add(ActivePlugin NewActivePluginObject)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>ActivePlugin</datatype>
+                        <name>NewActivePluginObject</name>
+                        <description>New ActivePlugin Object</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Adds a new Active Plugin to IronWASP's internal list</description>
+            </method>
+            <method>
+		<name>get(string PluginName)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>PluginName</name>
+                        <description>Name of the ActivePlugin</description>
+                    </parameter>
+                </parameters>
+		<return>active_plugin</return>
+                <description>Returns a ActivePlugin of the given name from IronWASP's internal list. [i[br]]Eg: ActivePlugin.get("Cross-site Scripting")</description>
+            </method>
+            <method>
+		<name>list()</name>
+                <type>Static</type>
+                <parameters></parameters>
+		<return>string_[]</return>
+                <description>Returns the names of all ActivePlugins currently present in IronWASP's internal list.</description>
+            </method>
+            <method>
+		<name>check(Request Req, Scanner Scan)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>Request</datatype>
+                        <name>Req</name>
+                        <description>The Request that is being scanned</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>Scanner</datatype>
+                        <name>Scan</name>
+                        <description>The Scanner object that is calling this Active Plugin</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>This method contains the vulnerability checking logic of this particular ActivePlugin and performs the required check.</description>
+            </method>
+        </methods>
+    </class>
+    <class>
+        <name>PassivePlugin</name>
+        <type>Non-Static</type>
+        <description>An IronPython or IronRuby script that performs some vulnerability checks on requests/responses passively.</description>
+        <constructors>
+        </constructors>
+        <properties>
+            <property>
+		<name>name</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>Name of the Passive Plugin</description>
+            </property>
+            <property>
+		<name>description</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>Information about the plugin.</description>
+            </property>
+            <property>
+		<name>version</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>Version number of the Plugin</description>
+            </property>
+        </properties>
+        <methods>
+            <method>
+		<name>add(PassivePlugin NewPassivePluginObject)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>PassivePlugin</datatype>
+                        <name>NewPassivePluginObject</name>
+                        <description>New PassivePlugin Object</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Adds a new Passive Plugin to IronWASP's internal list</description>
+            </method>
+            <method>
+		<name>get(string PluginName)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>PluginName</name>
+                        <description>Name of the PassivePlugin</description>
+                    </parameter>
+                </parameters>
+		<return>passive_plugin</return>
+                <description>Returns a PassivePlugin of the given name from IronWASP's internal list.</description>
+            </method>
+            <method>
+		<name>list()</name>
+                <type>Static</type>
+                <parameters></parameters>
+		<return>string_[]</return>
+                <description>Returns the names of all PassivePlugins currently present in IronWASP's internal list.</description>
+            </method>
+            <method>
+		<name>check(Session Sess, PluginResults Results)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>Session</datatype>
+                        <name>Sess</name>
+                        <description>The Session object that is being passively scanned</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>PluginResults</datatype>
+                        <name>Results</name>
+                        <description>The object that will hold the findings of the check if any.</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>This method contains the vulnerability checking logic of this particular PassivePlugin and performs the required check.</description>
+            </method>
+        </methods>
+    </class>
+    <class>
+        <name>FormatPlugin</name>
+        <type>Non-Static</type>
+        <description>An IronPython or IronRuby script that can convert an object of any special format to xml and back.</description>
+        <constructors>
+        </constructors>
+        <properties>
+            <property>
+		<name>name</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>Name of the Format Plugin</description>
+            </property>
+            <property>
+		<name>description</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>Information about the plugin.</description>
+            </property>
+            <property>
+		<name>version</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>Version number of the Plugin</description>
+            </property>
+        </properties>
+        <methods>
+            <method>
+		<name>add(FormatPlugin NewFormatPluginObject)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>FormatPlugin</datatype>
+                        <name>NewFormatPluginObject</name>
+                        <description>New FormatPlugin Object</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Adds a new Format Plugin to IronWASP's internal list</description>
+            </method>
+            <method>
+		<name>get(string PluginName)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>PluginName</name>
+                        <description>Name of the FormatPlugin</description>
+                    </parameter>
+                </parameters>
+		<return>format_plugin</return>
+                <description>Returns a FormatPlugin of the given name from IronWASP's internal list.</description>
+            </method>
+            <method>
+		<name>list()</name>
+                <type>Static</type>
+                <parameters></parameters>
+		<return>string_[]</return>
+                <description>Returns the names of all FormatPlugins currently present in IronWASP's internal list.</description>
+            </method>
+            <method>
+		<name>xml_to_array(string Xml)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Xml</name>
+                        <description>The Xml must be converted in to array</description>
+                    </parameter>
+                </parameters>
+		<return>string_[,]</return>
+                <description>Converts the Xml input in to a two-dimensional array and returns it. The two-dimensional array holds the values in the Xml and the node path of the values. This information is used for fuzzing the Xml.</description>
+            </method>
+            <method>
+		<name>inject_in_xml(string Xml, int InjectionPosition, string ValueToString)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Xml</name>
+                        <description>The Xml in to which a value must be injected</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>int</datatype>
+                        <name>InjectionPosition</name>
+                        <description>The position in the Xml where the value must be injected. This is the index of the value in the two-dimensional array returned by FormatPlugin.XmlToArray(Xml)</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>ValueToString</name>
+                        <description>The value that must be injected in to the Xml</description>
+                    </parameter>
+                </parameters>
+		<return>string</return>
+                <description>Inserts a value in to the specified position in the Xml and returns the updated Xml. This method is used in fuzzing Xml based data or data of any format that gets converted to Xml by the approriate FormatPlugin</description>
+            </method>
+        </methods>
+    </class>
+    <class>
+        <name>SessionPlugin</name>
+        <type>Non-Static</type>
+        <description>An IronPython or IronRuby script that would contain methods to define a specific web application's custom behaviour.</description>
+        <constructors>
+        </constructors>
+        <properties>
+            <property>
+		<name>name</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>Name of the Session Plugin</description>
+            </property>
+            <property>
+		<name>description</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>Information about the plugin.</description>
+            </property>
+            <property>
+		<name>version</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>Version number of the Plugin</description>
+            </property>
+        </properties>
+        <methods>
+            <method>
+		<name>add(SessionPlugin NewSessionPluginObject)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>SessionPlugin</datatype>
+                        <name>NewSessionPluginObject</name>
+                        <description>New SessionPlugin Object</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Adds a new Session Plugin to IronWASP's internal list</description>
+            </method>
+            <method>
+		<name>get(string PluginName)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>PluginName</name>
+                        <description>Name of the SessionPlugin</description>
+                    </parameter>
+                </parameters>
+		<return>format_plugin</return>
+                <description>Returns a SessionPlugin of the given name from IronWASP's internal list.</description>
+            </method>
+            <method>
+		<name>list()</name>
+                <type>Static</type>
+                <parameters></parameters>
+		<return>string_[]</return>
+                <description>Returns the names of all SessionPlugins currently present in IronWASP's internal list.</description>
+            </method>
+        </methods>
+    </class>
+    <class>
+        <name>Scanner</name>
+        <type>Non-Static</type>
+        <description>A class to create a custom security scanner by determining injection points and active plugins.</description>
+        <constructors>
+            <constructor>
+                <name>Scanner.new(Request RequestToScan)</name>
+                <description>Creates a new Scanner object based on the Request</description>
+                <parameters>
+                    <parameter>
+                        <datatype>Request</datatype>
+                        <name>RequestToScan</name>
+                        <description>A request that would be scanned by the scanner object.</description>
+                    </parameter>
+                </parameters>
+            </constructor>
+        </constructors>
+        <properties>
+            <property>
+		<name>session_handler</name>
+                <datatype>SessionPlugin</datatype>
+                <type>Non-Static</type>
+                <description>Session plugin assosiated with this scanner to control its behaviour</description>
+            </property>
+            <property>
+		<name>body_format</name>
+                <datatype>FormatPlugin</datatype>
+                <type>Non-Static</type>
+                <description>Format Plugin associated with this scanner to represent the body of the scanner's request.</description>
+            </property>
+            <property>
+		<name>injected_section</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>Name of the section of the request that is being currently injected. Possible values are URL, Query, Body, Cookie and Headers. [i[br]] (Only to be called within the ActivePlugin script)</description>
+            </property>
+            <property>
+		<name>injected_parameter</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>Name of the parameter that is being currently injected. [i[br]] (Only to be called within the ActivePlugin script) </description>
+            </property>
+            <property>
+		<name>injected_url_path_position</name>
+                <datatype>int</datatype>
+                <type>Non-Static</type>
+                <description>The index of the UrlPathParts that is being currently injected. [i[br]] (Only to be called within the ActivePlugin script) </description>
+            </property>
+            <property>
+		<name>pre_injection_parameter_value</name>
+                <datatype>string</datatype>
+                <type>Non-Static</type>
+                <description>Original value of the parameter that is being currently injected. [i[br]] (Only to be called within the ActivePlugin script)</description>
+            </property>
+            <property>
+		<name>injected_request</name>
+                <datatype>Request</datatype>
+                <type>Non-Static</type>
+                <description>Request sent to the serer with some parameter injected. [i[br]] (Only to be called within the ActivePlugin script)</description>
+            </property>
+            <property>
+		<name>injection_response</name>
+                <datatype>Response</datatype>
+                <type>Non-Static</type>
+                <description>Response returned from the server for InjectedRequest. [i[br]] (Only to be called within the ActivePlugin script)</description>
+            </property>
+        </properties>
+        <methods>
+            <method>
+		<name>add_check(string ActivePluginName)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>ActivePluginName</name>
+                        <description>Name of the active plugin that must be included in the scan.</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Includes an Active Plugin to the scanner and calls it at scan time.</description>
+            </method>
+            <method>
+		<name>remove_check(string ActivePluginName)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>ActivePluginName</name>
+                        <description>Name of the ActivePlugin to be removed from the scanner</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Removes the Active Plugins from the list of checks the scanner calls at scan time.</description>
+            </method>
+            <method>
+		<name>show_checks()</name>
+                <type>Non-Static</type>
+                <parameters></parameters>
+		<return>string_[]</return>
+                <description>Returns the names of all ActivePlugins that will be called by the Scanner at scan time.</description>
+            </method>
+            <method>
+		<name>clear_checks()</name>
+                <type>Non-Static</type>
+                <parameters></parameters>
+		<return>void</return>
+                <description>Removes all the Active Plugins that would have been called by the Scanner at scan time.</description>
+            </method>
+            <method>
+		<name>inject_all()</name>
+                <type>Non-Static</type>
+                <parameters></parameters>
+		<return>void</return>
+                <description>Sets injection points in all Url positions, Query, Body, Cookie and Header parameters.</description>
+            </method>
+            <method>
+		<name>inject_url()</name>
+                <type>Non-Static</type>
+                <parameters></parameters>
+		<return>void</return>
+                <description>Sets injection points in all Url positions.</description>
+            </method>
+            <method>
+		<name>inject_url(int UrlPosition)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>int</datatype>
+                        <name>UrlPosition</name>
+                        <description>Zero based value of the Url position that must be injected</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Sets an injection point at the specified Url position.</description>
+            </method>
+            <method>
+		<name>inject_query()</name>
+                <type>Non-Static</type>
+                <parameters></parameters>
+		<return>void</return>
+                <description>Sets injection points in all Query parameter positions.</description>
+            </method>
+            <method>
+		<name>inject_query(string ParameterName)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>ParameterName</name>
+                        <description>Name of the parameter where an injection point must be set.</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Sets an injection point at all occurances of the given parameter name in the query.</description>
+            </method>
+            <method>
+		<name>inject_query(string ParameterName, int SubParameterPosition)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>ParameterName</name>
+                        <description>Name of the parameter where an injection point must be set.</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>int</datatype>
+                        <name>SubParameterPosition</name>
+                        <description>SubParameter Position of the parameter that must be injected</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Sets an injection point at the specified occurance of the given parameter name in the query if multiple parameter exist with the same name.</description>
+            </method>
+            <method>
+		<name>inject_body()</name>
+                <type>Non-Static</type>
+                <parameters></parameters>
+		<return>void</return>
+                <description>Sets injection points in all Body parameter positions.</description>
+            </method>
+            <method>
+		<name>inject_body(string ParameterName)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>ParameterName</name>
+                        <description>Name of the parameter where an injection point must be set.</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Sets an injection point at all occurances of the given parameter name in the Body.</description>
+            </method>
+            <method>
+		<name>inject_body(string ParameterName, int SubParameterPosition)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>ParameterName</name>
+                        <description>Name of the parameter where an injection point must be set.</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>int</datatype>
+                        <name>SubParameterPosition</name>
+                        <description>SubParameter Position of the parameter that must be injected</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Sets an injection point at the specified occurance of the given parameter name in the body if multiple parameter exist with the same name.</description>
+            </method>
+            <method>
+		<name>inject_body(int XmlArrayInjectionPoint)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>int</datatype>
+                        <name>XmlArrayInjectionPoint</name>
+                        <description>A position inside the XmlInjectionPoints array</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>If a FormatPlugin is set then sets an injection point the specified point in the XmlInjectionPoints array.</description>
+            </method>
+            <method>
+		<name>inject_cookie()</name>
+                <type>Non-Static</type>
+                <parameters></parameters>
+		<return>void</return>
+                <description>Sets injection points in all Cookie parameter positions.</description>
+            </method>
+            <method>
+		<name>inject_cookie(string ParameterName)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>ParameterName</name>
+                        <description>Name of the parameter where an injection point must be set.</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Sets an injection point at all occurances of the given parameter name in the Cookie.</description>
+            </method>
+            <method>
+		<name>inject_cookie(string ParameterName, int SubParameterPosition)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>ParameterName</name>
+                        <description>Name of the parameter where an injection point must be set.</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>int</datatype>
+                        <name>SubParameterPosition</name>
+                        <description>SubParameter Position of the parameter that must be injected</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Sets an injection point at the specified occurance of the given parameter name in the Cookie if multiple parameter exist with the same name.</description>
+            </method>
+            <method>
+		<name>inject_headers()</name>
+                <type>Non-Static</type>
+                <parameters></parameters>
+		<return>void</return>
+                <description>Sets injection points in all Headers parameter positions.</description>
+            </method>
+            <method>
+		<name>inject_headers(string ParameterName)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>ParameterName</name>
+                        <description>Name of the parameter where an injection point must be set.</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Sets an injection point at all occurances of the given parameter name in the Headers.</description>
+            </method>
+            <method>
+		<name>inject_headers(string ParameterName, int SubParameterPosition)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>ParameterName</name>
+                        <description>Name of the parameter where an injection point must be set.</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>int</datatype>
+                        <name>SubParameterPosition</name>
+                        <description>SubParameter Position of the parameter that must be injected</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Sets an injection point at the specified occurance of the given parameter name in the Headers if multiple parameter exist with the same name.</description>
+            </method>
+            <method>
+		<name>launch_scan()</name>
+                <type>Non-Static</type>
+                <parameters></parameters>
+		<return>void</return>
+                <description>Similar to scan() but instead of performing the scan in the current thread it queues the scan job in the 'AutomatedScanning' section. The scan logs will be updated in the 'ScanLog' grid instead of the 'ScriptingLog' grid.</description>
+            </method>
+            <method>
+		<name>inject(string Payload)</name>
+                <type>Non-Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Payload</name>
+                        <description>Payload to be injected</description>
+                    </parameter>
+                </parameters>
+		<return>response</return>
+                <description>Injects the payload in the section of the request where the current injection pointer lies and returns the corresponding response. [i[br]] (Only to be called within the ActivePlugin script)</description>
+            </method>
+        </methods>
+    </class>
+    <class>
+        <name>IronJint</name>
+        <type>Static</type>
+        <description>A JavaScript static analyzer to check for DOM-based XSS issues</description>
+        <constructors>
+        </constructors>
+        <properties>
+        </properties>
+        <methods>
+            <method>
+		<name>trace(string JavaScriptCode)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>JavaScriptCode</name>
+                        <description>The JavaScript code that must be analyzed</description>
+                    </parameter>
+                </parameters>
+		<return>trace_result</return>
+                <description>Analyzes the JavaScript code for instances where DOM XSS Sources and Sinks are present including instances where Sources are assigned to Sinks. The result of the analysis is stored in a TraceResult object and returned.</description>
+            </method>
+            <method>
+		<name>trace(string JavaScriptCode, string Keyword)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>JavaScriptCode</name>
+                        <description>The JavaScript code that must be analyzed</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Keyword</name>
+                        <description>The Keyword that must be traced through the JavaScript</description>
+                    </parameter>
+                </parameters>
+		<return>trace_result</return>
+                <description>Analyzes the JavaScript code for instances where the given keyword is assigned to DOM XSS Sinks. The result of the analysis is stored in a TraceResult object and returned.</description>
+            </method>
+            <method>
+		<name>is_expression_statement(string JavaScriptCode, string Keyword)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>JavaScriptCode</name>
+                        <description>The JavaScript code that must be analyzed</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Keyword</name>
+                        <description>The string value that must be checked for being an expression statement.</description>
+                    </parameter>
+                </parameters>
+		<return>bool</return>
+                <description>Parses the input JavaScript code and checks if the keyword appears inside the JavaScript as an expression statement.</description>
+            </method>
+            <method>
+		<name>beautify(string JavaScriptCode)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>JavaScriptCode</name>
+                        <description>The JavaScript code that must be beautified</description>
+                    </parameter>
+                </parameters>
+		<return>string</return>
+                <description>Properly formats the input code and returns a more readable version</description>
+            </method>
+        </methods>
+    </class>
+    <class>
+        <name>TraceResult</name>
+        <type>Non-Static</type>
+        <description>Represents the result of JavaScript static analysis performed using the Trace method of IronJint.</description>
+        <constructors>
+        </constructors>
+        <properties>
+            <property>
+		<name>source_line_nos</name>
+                <datatype>int[]</datatype>
+                <type>Non-Static</type>
+                <description>Line numbers that are tained by a DOM XSS source</description>
+            </property>
+            <property>
+		<name>sink_line_nos</name>
+                <datatype>int[]</datatype>
+                <type>Non-Static</type>
+                <description>Line numbers that are tained by a DOM XSS sink</description>
+            </property>
+            <property>
+		<name>source_to_sink_line_nos</name>
+                <datatype>int[]</datatype>
+                <type>Non-Static</type>
+                <description>Line numbers where a DOM XSS source is assigned to a DOM XSS sink. If this is the result of IronJint.Trace(code, keyword) then these are the lines where the keyword is assigned to a DOM XSS sink.</description>
+            </property>
+            <property>
+		<name>source_lines</name>
+                <datatype>string[]</datatype>
+                <type>Non-Static</type>
+                <description>Lines that are tained by a DOM XSS source</description>
+            </property>
+            <property>
+		<name>sink_lines</name>
+                <datatype>string[]</datatype>
+                <type>Non-Static</type>
+                <description>Lines that are tained by a DOM XSS sink</description>
+            </property>
+            <property>
+		<name>source_to_sink_lines</name>
+                <datatype>string[]</datatype>
+                <type>Non-Static</type>
+                <description>Lines where a DOM XSS source is assigned to a DOM XSS sink. If this is the result of IronJint.Trace(code, keyword) then these are the lines where the keyword is assigned to a DOM XSS sink.</description>
+            </property>
+            <property>
+		<name>keyword_contexts</name>
+                <datatype>string[]</datatype>
+                <type>Non-Static</type>
+                <description>If this is the result of IronJint.Trace(code, keyword) then list of contexts in which the given keyword is present in the JavaScript code is returned.</description>
+            </property>
+            <property>
+		<name>lines</name>
+                <datatype>string[]</datatype>
+                <type>Non-Static</type>
+                <description>All the lines of the cleaned up version of the input JavaScript code.</description>
+            </property>
+        </properties>
+        <methods>
+        </methods>
+    </class>
+    <class>
+        <name>GlobalStore</name>
+        <type>Static</type>
+        <description>A store for all types of objects that can be accessed from any part of the tool.</description>
+        <constructors>
+        </constructors>
+        <properties>
+        </properties>
+        <methods>
+            <method>
+		<name>put(string Name, object ObjectToStore)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Name</name>
+                        <description>Name by which the object will be referred to inside the store</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>object</datatype>
+                        <name>ObjectToStore</name>
+                        <description>The object that must be stored</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Any object like Request, Response etc can be stored in this store and can be referred to by the name assigned to it.</description>
+            </method>
+            <method>
+		<name>get(string Name)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Name</name>
+                        <description>Name of the object stored</description>
+                    </parameter>
+                </parameters>
+		<return>object</return>
+                <description>Fetch the object from the store by providing its name.</description>
+            </method>
+            <method>
+		<name>has(string Name)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Name</name>
+                        <description>Name of the object stored</description>
+                    </parameter>
+                </parameters>
+		<return>bool</return>
+                <description>Returns a boolean indicating if an object by that name exists in the store.</description>
+            </method>
+            <method>
+		<name>remove(string Name)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Name</name>
+                        <description>Name of the object stored</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Removes the object matching the name from the store.</description>
+            </method>
+        </methods>
+    </class>
+    <class>
+        <name>ThreadStore</name>
+        <type>Static</type>
+        <description>A store for all types of objects that is specific to a thread on which it is called. Objects stored in a ThreadStore are only accessible to calls made from the same thread.</description>
+        <constructors>
+        </constructors>
+        <properties>
+        </properties>
+        <methods>
+            <method>
+		<name>put(string Name, object ObjectToStore)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Name</name>
+                        <description>Name by which the object will be referred to inside the store</description>
+                    </parameter>
+                    <parameter>
+                        <datatype>object</datatype>
+                        <name>ObjectToStore</name>
+                        <description>The object that must be stored</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Any object like Request, Response etc can be stored in this store and can be referred to by the name assigned to it.</description>
+            </method>
+            <method>
+		<name>get(string Name)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Name</name>
+                        <description>Name of the object stored</description>
+                    </parameter>
+                </parameters>
+		<return>object</return>
+                <description>Fetch the object from the store by providing its name.</description>
+            </method>
+            <method>
+		<name>has(string Name)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Name</name>
+                        <description>Name of the object stored</description>
+                    </parameter>
+                </parameters>
+		<return>bool</return>
+                <description>Returns a boolean indicating if an object by that name exists in the store.</description>
+            </method>
+            <method>
+		<name>remove(string Name)</name>
+                <type>Static</type>
+                <parameters>
+                    <parameter>
+                        <datatype>string</datatype>
+                        <name>Name</name>
+                        <description>Name of the object stored</description>
+                    </parameter>
+                </parameters>
+		<return>void</return>
+                <description>Removes the object matching the name from the store.</description>
+            </method>
+            <method>
+		<name>clear()</name>
+                <type>Static</type>
+                <parameters>
+                </parameters>
+		<return>void</return>
+                <description>Removes all the objects stored from calling thread. Objects stored from other threads are not affected.</description>
+            </method>
+            <method>
+		<name>this_thread()</name>
+                <type>Static</type>
+                <parameters>
+                </parameters>
+		<return>int</return>
+                <description>Returns the Thread ID of the thread from this this call is made.</description>
+            </method>
+        </methods>
+    </class>
+    <class>
+        <name>Config</name>
+        <type>Static</type>
+        <description>A class that holds some information about the tool.</description>
+        <constructors>
+        </constructors>
+        <properties>
+            <property>
+		<name>path</name>
+                <datatype>string</datatype>
+                <type>Static</type>
+                <description>[READ-ONLY]Returns the full path of the location of the IronWASP binary in the file system.</description>
+            </property>
+        </properties>
+        <methods>
+        </methods>
+    </class>
+    <constructorsdesc>Calls used to instantiate the Class.</constructorsdesc>
+    <propertiesdesc>Static and Non-Static variables available in the Class</propertiesdesc>
+    <methodsdesc>Static and Non-Static Function calls available in the Class.</methodsdesc>
+    <membersdesc>Members of the Enum class.</membersdesc>
+</api>

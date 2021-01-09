@@ -1,0 +1,19 @@
+include IronWASP
+
+#Inherit from the base PassivePlugin class
+class <Plugin Name> < PassivePlugin
+
+    #Override the Check method of the base class with custom functionality
+    def Check(sess, results)
+        
+    end        
+end
+
+p = <Plugin Class Name>.new
+p.name = "Name of the Plugin inside Iron. Pick one without spaces and special characters like 'CreditCardScraper', 'SetCookieAnalyzer' etc. Name must be unique across all plugins"
+p.description = "Short Description of the Plugin, displayed in the Plugins section"
+#When should this plugin be called. Possible values - before_interception, after_interception, both
+#p.calling_state = PluginCallingState.before_interception
+#On what should this plugin run. Possible values - request, response, both, offline. offline is the default value, it is also the recommended value if you are not going to perform any changes in the request/response
+p.works_on = PluginWorksOn.response
+PassivePlugin.add(p)

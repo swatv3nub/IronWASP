@@ -1,0 +1,42 @@
+include IronWASP
+
+#Inherit from the base FormatPlugin class
+class <Plugin Name> < FormatPlugin
+
+    #Override the ToXmlFromRequest method of the base class with custom functionlity. Convert RequestBody in to Xml String and return it
+    def ToXmlFromRequest(req)
+        return ToXml(req.body_array)
+    end
+
+    #Override the ToXmlFromResponse method of the base class with custom functionlity. Convert ResponseBody in to Xml String and return it
+    def ToXmlFromResponse(res)
+        return ToXml(res.body_array)
+    end
+
+    #Override the ToXml method of the base class with custom functionlity. Convert ByteArray in to Xml String and return it
+    def ToXml(object_array)
+        
+    end
+
+    #Override the ToRequestFromXml method of the base class with custom functionlity. Update Request based on Xml String input and return it
+    def ToRequestFromXml(req, xml)
+        req.body_array = ToObject(xml)
+        return req
+    end
+
+    #Override the ToResponseFromXml method of the base class with custom functionlity. Update Response based on Xml String input and return it    
+    def ToResponseFromXml(res, xml)
+        res.body_array = ToObject(xml)
+        return res
+    end
+
+    #Override the ToObject method of the base class with custom functionlity. Convert the XmlString in to an Object and return it as ByteArray
+    def ToObject(xml_string)
+        
+    end
+end 
+
+p = <Plugin Class Name>.new
+p.name = "Name of the Plugin inside Iron. Pick a short name without spaces and special characters like 'DoublePipeSeperator','CustomResponseBody' etc. Name must be unique across all plugins"
+p.description = "Short Description of the Plugin, displayed in the Plugins section"
+FormatPlugin.add(p)

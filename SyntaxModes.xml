@@ -1,0 +1,8 @@
+<SyntaxModes version="1.0">
+	<Mode file       = "Python.xshd"
+	      name       = "Python"
+	      extensions = ".py"/>
+	<Mode file       = "Ruby.xshd"
+	      name       = "Ruby"
+	      extensions = ".rb"/>
+</SyntaxModes>
