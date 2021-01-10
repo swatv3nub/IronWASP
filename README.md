@@ -51,5 +51,5 @@
 
 # Credits
 
-	This Application belongs to [Lavakumar](https://github.com/lavakumar), I just Repacked and Redistributed it
+	This Application belongs to Lavakumar, I just Repacked and Redistributed it
 	I have no developer rights in this.
